@@ -1,7 +1,5 @@
 <?php
 include('DBConn.php')
-
-
 ?>
 <!DOCTYPE HTML?>
 <html>
