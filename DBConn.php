@@ -3,7 +3,7 @@
 define('DB_Server','localhost:3306');
 define('DB_USERNAME','root');
 define('DB_PASSWORD','');
-define('DB_DATABASE','music_store_db');
+define('DB_DATABASE','chinook');
 
 $conn = mysqli_connect(DB_Server,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 if (!$conn){
