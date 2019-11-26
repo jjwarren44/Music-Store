@@ -1,0 +1,22 @@
+table {
+	table-layout: fixed;
+}
+
+th {
+	border-bottom: 3px solid #ddd !important;
+	padding: 1.5vw !important;
+	font-size: 16pt;
+}
+
+td {
+	border-bottom: 1px solid #ddd !important;
+	margin: 50px !important;
+	width: 50%;
+	transition: 0.2s;
+}
+
+td:hover {
+	background-color: #ddd;
+	color: black;
+
+}
