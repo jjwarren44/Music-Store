@@ -3,9 +3,11 @@ table {
 }
 
 th {
+	background-color: #ddd !important;
 	border-bottom: 3px solid #ddd !important;
 	padding: 1.5vw !important;
 	font-size: 16pt;
+	color: black;
 }
 
 td {
@@ -15,8 +17,11 @@ td {
 	transition: 0.2s;
 }
 
-td:hover {
+tr:hover {
 	background-color: #ddd;
 	color: black;
+}
 
+#spotifyLogo {
+	width: 25px;
 }

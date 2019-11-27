@@ -1,5 +1,5 @@
 <?php
-include('DBConn.php')
+require_once('DBConn.php');
 ?>
 <!DOCTYPE HTML?>
 <html>
@@ -25,7 +25,8 @@ include('DBConn.php')
 
 	<div class="container-fluid">
         <div class="row" align="center">
-            <div class=col-4></div>
+            <div class=col-4>
+            </div>
             <div class="col-4" align="center">
                 <div class="form-group" align="center">
                     <input type="text" class="form-control" onkeyup="search()" placeholder="Search Album or Artist" id="searchBar" align="center">
@@ -41,8 +42,8 @@ include('DBConn.php')
                     <div class = 'tableContent'>
         				<thead>
         						<tr class="table-active">
-             					<th scope="col span='50%'">Album</th>
-              					<th scope="col span='50%'">Artist</th>
+             					<th>Album</th>
+              					<th>Artist</th>
              				</tr>
              				</thead>
                             <tbody> 
@@ -54,10 +55,12 @@ include('DBConn.php')
                                 $result = mysqli_query($conn, "SELECT Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId ORDER BY AlbumId");
 
                                 while ($row = $result->fetch_assoc()) {
-                                    echo "<tr class = 'table-active'>";
+                                    echo "<tr class='table-active'>";
                                     echo "<td>".$row['Title']."</td>";
                                     echo "<td>".$row['Name']."</td>";
                                 }
+
+                                mysqli_close($conn);
 
                             ?>
             				</tbody>

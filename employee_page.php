@@ -70,6 +70,7 @@
                     echo '</a>';
                     echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
                         echo '<a class="dropdown-item" href="#">My Account</a>';
+                        echo '<a class="dropdown-item" href="#">Logout</a>';
                     echo '</div>';
                 echo '</li>';
             } else { // Not logged in, show login dropdown
@@ -86,73 +87,12 @@
             }
 
           ?>
-          
+
         </ul>
       </div>
     </nav>
-	<div class="cotainer-fluid">
-		<br>
-		<div class="row text-center">
-			<div class="col-md-12">
-				<h1 class="display-4 text-secondary">Search for the music you want</h1>
-                <h5>A catalog full of music. Find information about music! Just a few clicks away</h5>
-                <a href="table.php"><button type="button" class="btn btn-secondary">Find Music</button></a>
-			</div>
-        </div>
+	
+	<form action="employeeLoginForm.php" method="post" id="profileLogout">
+    	<button type="submit" name="logout" class="btn btn-outline-danger">Logout</button>
+    </form>
 
-        <!-- Both login modals -->
-
-        <!-- Customer login -->
-	    <div class="modal fade" id="customerLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Customer Login</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                            <p>Username</p>
-                            <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
-                            <p>Password</p>
-                            <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Log in</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Employee login -->
-        <div class="modal fade" id="employeeLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Employee Login</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="employeeLoginForm.php" method="post" id="employeeLogin">
-                            <p>Employee ID</p>
-                            <div class="form-group row"><input type="text" name="employeeID" id="employeeIDinput" class="form-control" placeholder="Enter Employee ID"></div>
-                            <p>Employee First Name</p>
-                            <div class="form-group row"><input type="text" name="employeeName" id="employeeNameInput" class="form-control" placeholder="Enter First Name"></div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="employeeLoginSubmit" class="btn btn-primary">Log in</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-</html>
