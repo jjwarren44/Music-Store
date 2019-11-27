@@ -7,7 +7,7 @@
 
 	<title>Employee Dashboard</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/index.css"> <!-- Custom css file -->
+    <link rel="stylesheet" type="text/css" href="css/employee_page.css"> <!-- Custom css file -->
 
     <!-- JQuery -->
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
                         <strong>Login failed!</strong> User not found or incorrect password.
                     </div>';
                 echo '</div>';
-                $_SESSION['failedlogin'] = null;
+                unset($_SESSION['failedLogin']);
             }
 
         ?>
@@ -45,44 +45,24 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="Index.php">Home <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="Index.php">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="table.php">Catalog</a>
+            <a class="nav-link" href="catalog.php">Catalog</a>
           </li>
 
           <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
 
           <?php
             if (isset($_SESSION['employeeID'])) {
-                echo '<li class="nav-item dropdown">';
+                echo '<li class="nav-item dropdown active">';
                     echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
+                        echo 'My Account <span class="sr-only">(current)</span>';
                     echo '</a>';
                     echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                    	echo '<p class="loggedinName">'.$_SESSION['employeeName'].'</p>';
                         echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
-                    echo '</div>';
-                echo '</li>';
-
-            } elseif (isset($_SESSION['customerID'])) {
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#">My Account</a>';
-                        echo '<a class="dropdown-item" href="#">Logout</a>';
-                    echo '</div>';
-                echo '</li>';
-            } else { // Not logged in, show login dropdown
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'Log in';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#customerLogin">Customer</a>';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin">Employee</a>';
                     echo '</div>';
                 echo '</li>';
 
@@ -94,7 +74,7 @@
       </div>
     </nav>
 	
-	<form action="employeeLoginForm.php" method="post" id="profileLogout">
+	<form action=" login_form_handler.php" method="post" id="profileLogout">
     	<button type="submit" name="logout" class="btn btn-outline-danger">Logout</button>
     </form>
 

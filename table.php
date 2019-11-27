@@ -19,11 +19,81 @@ require_once('DBConn.php');
 
 </head>
 <body>
-    <?php
-    include 'navbar.php'
-    ?>
-	<br>
-	<br>
+
+<!-- Bring in session -->
+<?php  require_once('DBConn.php');
+    session_start();
+?>
+
+        <!-- If user has unsuccessful login -->
+        <?php 
+            if(isset($_SESSION['failedLogin'])) {
+                echo '<div class="container-fluid failedlogin" style="padding-top: 1vw">';
+                echo '<div class="alert alert-danger">
+                        <strong>Login failed!</strong> User not found or incorrect password.
+                    </div>';
+                echo '</div>';
+                $_SESSION['failedlogin'] = null;
+            }
+
+        ?>
+
+    <!-- Nav bar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-brand" href="Index.php">Music Store</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="Index.php">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="table.php">Catalog</a>
+          </li>
+
+          <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
+
+          <?php
+            if (isset($_SESSION['employeeID'])) {
+                echo '<li class="nav-item dropdown">';
+                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo 'My Account';
+                    echo '</a>';
+                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
+                    echo '</div>';
+                echo '</li>';
+
+            } elseif (isset($_SESSION['customerID'])) {
+                echo '<li class="nav-item dropdown">';
+                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo 'My Account';
+                    echo '</a>';
+                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="#">My Account</a>';
+                        echo '<a class="dropdown-item" href="#">Logout</a>';
+                    echo '</div>';
+                echo '</li>';
+            } else { // Not logged in, show login dropdown
+                echo '<li class="nav-item dropdown">';
+                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
+                        echo 'Log in';
+                    echo '</a>';
+                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
+                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#customerLogin">Customer</a>';
+                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin">Employee</a>';
+                    echo '</div>';
+                echo '</li>';
+
+            }
+
+          ?>
+
+        </ul>
+      </div>
+    </nav>
 
 	<div class="container-fluid">
         <div class="row" align="center">
