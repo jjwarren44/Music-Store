@@ -65,6 +65,9 @@
                         echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
                     echo '</div>';
                 echo '</li>';
+                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
+                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
+                echo '</form>';
 
             } elseif (isset($_SESSION['customerID'])) {
                 echo '<li class="nav-item dropdown">';
@@ -75,6 +78,9 @@
                         echo '<a class="dropdown-item" href="#">My Account</a>';
                     echo '</div>';
                 echo '</li>';
+                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
+                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
+                echo '</form>';
             } else { // Not logged in, show login dropdown
                 echo '<li class="nav-item dropdown">';
                     echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
@@ -89,8 +95,13 @@
             }
 
           ?>
+
+
           
         </ul>
+
+
+
       </div>
     </nav>
 	<div class="cotainer-fluid">

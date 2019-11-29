@@ -37,3 +37,10 @@ tr:hover {
 	padding-left: 20px;
 	font-size: 18px;
 }
+
+#logout {
+	margin-left: 10px;
+	margin-top: 8px;
+	margin-bottom: 0px !important;
+	padding: 10px !important;
+}

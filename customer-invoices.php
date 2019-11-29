@@ -5,9 +5,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<title>Employee Dashboard</title>
+	<title>Customer Invoices</title>
 	<link href="css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/employee_page.css"> <!-- Custom css file -->
+    <link rel="stylesheet" type="text/css" href="css/customer-invoices.css"> <!-- Custom css file -->
 
     <!-- JQuery -->
 	<script src="js/jquery-3.4.1.js"></script>
@@ -66,7 +66,7 @@
                 echo '</li>';
                 echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
                     echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';                
+                echo '</form>';
             }
 
           ?>
@@ -75,62 +75,74 @@
       </div>
     </nav> <!-- end nav bar -->
 
-	<div class="container-fluid">
+    <div class="container-fluid">
     <div class="row" align="center">
-        <div class=col-4>
-        </div>
-        <div class="col-4" align="center">
-        	<?php
-				echo '<h3>'.$_SESSION['employeeName']."'s customers</h3>";
-				echo "<p>Click customer to that customer's invoices</p>";
-			?>
-            <div class="form-group" align="center">
-                <input type="text" class="form-control" onkeyup="search()" placeholder="Search Customer Name" id="searchBar" align="center">
-            </div>
-        </div>
-    </div>
+      <div class="col-1">
+      </div>
+    <div class="col-10">
 
-	<div class="row" align="center">
-	<div class="col-1">
-    </div>
-	<div class="col-10">
-        <!--Will get switched to php code//placeholder -->
-		<table class="table table-borderless" id="customers" align="Center">
+    <?php
+      $customerName = mysqli_query($conn, "SELECT FirstName, LastName FROM Customer WHERE CustomerId=".$_GET['CustomerId']);
+      $result = $customerName->fetch_assoc();
+
+      echo '<h3>'.$result['FirstName'].' '.$result['LastName']."'s orders";
+      echo '</br>';
+      echo '</br>';
+
+    ?>
+
+    <!-- Table of invoices for this customer with tracks for each invoice -->
+    <table class="table table-borderless" id="invoices" align="Center">
             <div class = 'tableContent'>
-				<thead>
-						<tr class="table-active">
-     					<th>Name</th>
-      					<th>Phone</th>
-      					<th>Email</th>
-     				</tr>
-     				</thead>
+        <thead>
+            <tr class="table-active">
+                <th>Invoice ID</th>
+                <th>Invoice Date</th>
+                <th>Songs</th>
+                <th>Total</th>
+            </tr>
+            </thead>
                     <tbody> 
 
                     <!-- Begin looping through all records in database to display all customers with SupportRepID == to employee ID -->
                     <?php
 
                         mysqli_begin_transaction($conn); // Start mySQLi transaction
-                        $result = mysqli_query($conn, "SELECT CustomerId, FirstName, LastName, Phone, Email FROM Customer WHERE SupportRepId=".$_SESSION['employeeID']);
+                        $invoices = mysqli_query($conn, "SELECT InvoiceId, InvoiceDate, Total FROM Invoice WHERE CustomerId=".$_GET['CustomerId']);
 
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr class='table-active clickable-row' customer-link='customer-invoices.php?CustomerId=".$row['CustomerId']."'>";
-                            echo "<td>".$row['FirstName']." ".$row['LastName']."</td>";
-                            echo "<td>".$row['Phone']."</td>";
-                            echo "<td>".$row['Email']."</td>";
+                        while ($invoiceRow = $invoices->fetch_assoc()) {
+                            echo "<tr class='table-active clickable-row'>";
+                            echo "<td>".$invoiceRow['InvoiceId']."</td>";
+                            echo "<td>".$invoiceRow['InvoiceDate']."</td>";
+
+                            // Find all tracks associated with invoice
+                            $tracks = mysqli_query($conn, "SELECT TrackId, UnitPrice, Quantity FROM InvoiceLine WHERE InvoiceId=".$invoiceRow['InvoiceId']);
+                            echo '<td>';
+                            echo '<ul>';
+                            while ($tracksInInvoice = $tracks->fetch_assoc()) {
+                              // list within cell to show all tracks
+                              $trackNamesQuery = mysqli_query($conn, "SELECT Name, Composer FROM Track WHERE TrackId=".$tracksInInvoice['TrackId']);
+                              $trackNames = $trackNamesQuery->fetch_assoc();
+                              echo '<li>'.$trackNames['Name'].' by '.$trackNames['Composer'].' - $'.$tracksInInvoice['UnitPrice'].'</li>';
+                            }
+
+                            echo '</ul>';
+                            echo '</td>';
+                            echo "<td>$".$invoiceRow['Total']."</td>";
                             echo "</tr>";
                         }
 
                         mysqli_close($conn);
 
                     ?>
-    				</tbody>
-                </div>
-		</table>
-	</div>
-	</div>
 
-</body>
+                    </tbody>
+                  </div>
+                </table>
+              </div>
+            </div>
+          </div>
 
-<script type="text/javascript" language="javascript" src="js/employee_page.js"></script>   <!-- javascript file -->
 
-</html>
+  </body>
+  </html>
