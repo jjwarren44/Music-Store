@@ -110,6 +110,7 @@ require_once('DBConn.php');
                 <div class="form-group" align="center">
                     <input type="text" class="form-control" onkeyup="search()" placeholder="Search Album or Artist" id="searchBar" align="center">
                 </div>
+                <p>Click album to see songs in the album</p>
             </div>
         </div>
 		<div class="row" align="center">
@@ -131,12 +132,13 @@ require_once('DBConn.php');
                             <?php
 
                                 mysqli_begin_transaction($conn); // Start mySQLi transaction
-                                $result = mysqli_query($conn, "SELECT Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId ORDER BY AlbumId");
+                                $result = mysqli_query($conn, "SELECT AlbumId, Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId ORDER BY AlbumId");
 
                                 while ($row = $result->fetch_assoc()) {
-                                    echo "<tr class='table-active'>";
+                                    echo "<tr class='table-active clickable-row' album-link='track_list.php?AlbumId=".$row['AlbumId']."&AlbumName=".$row['Title']."&Artist=".$row['Name']."'>";
                                     echo "<td>".$row['Title']."</td>";
                                     echo "<td>".$row['Name']."</td>";
+                                    echo "</tr>";
                                 }
 
                                 mysqli_close($conn);

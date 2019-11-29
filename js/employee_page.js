@@ -25,10 +25,6 @@ $(document).ready(function() {
     $(".clickable-row").click(function() {
     	//alert( $(this).attr('customerId'));
     	window.location = $(this).attr("customer-link");
-        $("table").fadeOut(function() {
-        	// Fade out customers table
-
-        });
 
 
     });

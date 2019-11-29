@@ -28,3 +28,11 @@ function search() {
     	}
   	}
 }
+
+$(document).ready(function() {
+    $(".clickable-row").click(function() {
+    	//alert( $(this).attr('customerId'));
+    	window.location = $(this).attr("album-link");
+
+    });
+});
