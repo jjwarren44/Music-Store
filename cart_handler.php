@@ -8,7 +8,7 @@
 			// Check to see if user already has a cart
 			if (isset($_SESSION['itemsInCart'])) {
 				// Check to see if user already added this to cart
-				if (isset($_SESSION['itemsInCart'][array_search($_POST['addToCart'], $_SESSION['itemsInCart'])])) {
+				if (in_array($_POST['addToCart'], $_SESSION['itemsInCart'])) {
 					// do nothing
 				} else {
 					array_push($_SESSION['itemsInCart'], $_POST['addToCart']); // Add this album to cart
@@ -23,11 +23,6 @@
 			// find album id from cart then remove from session array containing cart items
 			unset($_SESSION['itemsInCart'][array_search($_POST['removeFromCart'], $_SESSION['itemsInCart'])]);
 		}
-
-
-
-
-			
 
 		header('Location: ' . $_SERVER['HTTP_REFERER']); // Go back to whereever we came from
 
