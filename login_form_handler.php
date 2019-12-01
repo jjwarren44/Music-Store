@@ -39,7 +39,7 @@
 		} elseif(isset($_POST['logout'])) { // User attempting to logout
     		$_SESSION = array(); // Clear all session variables
     		session_destroy();
-    		header('Location: Index.php'); // Go back to homepage
+    		header('Location: index.php'); // Go back to homepage
 		}
 
 ?>

@@ -39,14 +39,14 @@
 
     <!-- Nav bar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="Index.php">Music Store</a>
+      <a class="navbar-brand" href="index.php">Music Store</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
         <ul class="navbar-nav">
           <li class="nav-item active">
-            <a class="nav-link" href="Index.php">Home<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="index.php">Home<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="catalog.php">Catalog</a>
@@ -94,16 +94,11 @@
 
             }
 
-          ?>
-
-
-          
+          ?>       
         </ul>
-
-
-
       </div>
-    </nav>
+    </nav> <!-- End Nav -->
+    
 	<div class="cotainer-fluid">
 		<br>
 		<div class="row text-center">
