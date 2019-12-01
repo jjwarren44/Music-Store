@@ -75,6 +75,19 @@
       </div>
     </nav> <!-- end nav bar -->
 
+    <!-- Cart -->
+    <a href="cart.php">
+        <button type="button" class="btn btn-primary" id="cart">
+            Cart <span class="badge badge-light"><?php
+                if (isset($_SESSION['itemsInCart'])) {
+                    echo sizeof($_SESSION['itemsInCart']);
+                }  else {
+                    echo '0';
+                }
+            ?></span>
+        </button>
+    </a>
+
 	<div class="container-fluid">
     <div class="row" align="center">
         <div class=col-4>

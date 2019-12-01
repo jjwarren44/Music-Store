@@ -98,6 +98,19 @@
         </ul>
       </div>
     </nav> <!-- End Nav -->
+
+    <!-- Cart -->
+    <a href="cart.php">
+        <button type="button" class="btn btn-primary" id="cart">
+            Cart <span class="badge badge-light"><?php
+                if (isset($_SESSION['itemsInCart'])) {
+                    echo sizeof($_SESSION['itemsInCart']);
+                }  else {
+                    echo '0';
+                }
+            ?></span>
+        </button>
+    </a>
     
 	<div class="cotainer-fluid">
 		<br>

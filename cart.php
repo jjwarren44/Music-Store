@@ -49,8 +49,8 @@ require_once('DBConn.php');
           <li class="nav-item">
             <a class="nav-link" href="index.php">Home</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="catalog.php">Catalog <span class="sr-only">(current)</span></a>
+          <li class="nav-item">
+            <a class="nav-link" href="catalog.php">Catalog</a>
           </li>
 
           <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
@@ -115,60 +115,85 @@ require_once('DBConn.php');
         </button>
     </a>
 
-	<div class="container-fluid">
-        <div class="row" align="center">
-            <div class=col-4>
-            </div>
-            <div class="col-4" align="center">
-                <div class="form-group" align="center">
-                    <input type="text" class="form-control" onkeyup="search()" placeholder="Search Album or Artist" id="searchBar" align="center">
-                </div>
-                <p>Click album to see songs in the album</p>
+    <!-- Begin looping through all records in database to display albums and artist -->
+    <?php
+
+        // If user has items in cart, show them
+        if (isset($_SESSION['itemsInCart']) && sizeof($_SESSION['itemsInCart']) > 0) {
+            // Show table and all cart items
+            echo '<div class="container-fluid">';
+                echo '<div class="row" align="center">';
+                    echo '<div class=col-4>';
+                    echo '</div>';
+                    echo '<div class="col-4" align="center">';
+                        echo '<div class="form-group" align="center">';
+                            echo '<input type="text" class="form-control" onkeyup="search()" placeholder="Search Album or Artist" id="searchBar" align="center">';
+                        echo '</div>';
+                        echo '<p>Click album to see songs in the album</p>';
+                    echo '</div>';
+                echo '</div>';
+                echo '<div class="row" align="center">';
+                    echo '<div class="col-1">';
+                    echo '</div>';
+                    echo '<div class="col-10">';
+                        echo '<table class="table table-borderless" id="albums" align="Center">';
+                            echo "<div class = 'tableContent'>";
+                                echo '<thead>';
+                                    echo "<col width='30%'>";
+                                    echo "<col width='30%'>";
+                                    echo "<col width='12%'>";
+                                        echo "<tr class='table-active'>";
+                                        echo "<th>Album</th>";
+                                        echo "<th>Artist</th>";
+                                        echo "<th></th>";
+                                    echo "</tr>";
+                                    echo "</thead>";
+                                    echo "<tbody>";
+
+            $sql_cartItems = implode(",", $_SESSION['itemsInCart']); // Create string of album IDs in cart -- example (56,42,10)
+
+            mysqli_begin_transaction($conn); // Start mySQLi transaction
+            $result = mysqli_query($conn, "SELECT AlbumId, Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId AND Album.AlbumId IN (${sql_cartItems})");
+
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr class='table-active clickable-row' album-link='track_list.php?AlbumId=".$row['AlbumId']."&AlbumName=".$row['Title']."&Artist=".$row['Name']."'>";
+                echo "<td>".$row['Title']."</td>";
+                echo "<td>".$row['Name']."</td>";
+                echo "<td><form action='cart_handler.php' method='post' id='addToCart'>";
+                    echo "<button type='submit' name='removeFromCart' value='".$row['AlbumId']."' class='btn btn-outline-danger'>Remove from cart</button>";
+                echo "</form></td>";
+                echo "</tr>";
+            }
+
+            // Free result set
+            mysqli_free_result($result);
+
+            // Show cart total on screen
+            $sql_cartItems = implode(",", $_SESSION['itemsInCart']); // Create string of album IDs in cart -- example (56,42,10)
+
+            mysqli_begin_transaction($conn); // Start mySQLi transaction
+            $result = mysqli_query($conn, "SELECT SUM(UnitPrice) FROM Track WHERE AlbumId IN (${sql_cartItems})");
+
+            $cartTotal = mysqli_fetch_row($result)[0];
+
+            echo "<h3 align='center'>Total: $${cartTotal}</h3>";
+
+            // Free result set
+            mysqli_free_result($result);
+
+            mysqli_close($conn); // close
+
+        } else { // else, there are no items in the cart
+            echo "<h3 align='center'>There are no items in your cart</h3>";
+        }
+
+    ?>
+                            </tbody>
+                        </div>
+                </table>
             </div>
         </div>
-		<div class="row" align="center">
-			<div class="col-1">
-            </div>
-			<div class="col-10">
-               
-				<table class="table table-borderless" id="albums" align="Center">
-                    <div class = 'tableContent'>
-        				<thead>
-                            <col width='30%'>
-                            <col width='30%'>
-                            <col width='10%'>
-        						<tr class="table-active">
-             					<th>Album</th>
-              					<th>Artist</th>
-                                <th></th>
-             				</tr>
-             				</thead>
-                            <tbody> 
 
-                            <!-- Begin looping through all records in database to display albums and artist -->
-                            <?php
-
-                                mysqli_begin_transaction($conn); // Start mySQLi transaction
-                                $result = mysqli_query($conn, "SELECT AlbumId, Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId ORDER BY AlbumId");
-
-                                while ($row = $result->fetch_assoc()) {
-                                    echo "<tr class='table-active clickable-row' album-link='track_list.php?AlbumId=".$row['AlbumId']."&AlbumName=".$row['Title']."&Artist=".$row['Name']."'>";
-                                    echo "<td>".$row['Title']."</td>";
-                                    echo "<td>".$row['Name']."</td>";
-                                    echo "<td><form action='cart_handler.php' method='post' id='addToCart'>";
-                                        echo "<button type='submit' name='addToCart' value='".$row['AlbumId']."' class='btn btn-outline-success'>Add to cart</button>";
-                                    echo "</form></td>";
-                                    echo "</tr>";
-                                }
-
-                                mysqli_close($conn);
-
-                            ?>
-            				</tbody>
-                        </div>
-    			</table>
-    		</div>
-    	</div>
 
         <!-- Both login modals -->
 
