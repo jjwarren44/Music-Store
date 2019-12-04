@@ -1,4 +1,4 @@
-<!DOCTYPE HTML?>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -37,43 +37,8 @@
 
         ?>
 
-    <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index.php">Music Store</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="catalog.php">Catalog</a>
-          </li>
-
-          <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
-          <?php
-            if (isset($_SESSION['employeeID'])) {
-                echo '<li class="nav-item dropdown active">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account <span class="sr-only">(current)</span>';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                    	echo '<p class="loggedinName">'.$_SESSION['employeeName'].'</p>';
-                        echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
-                    echo '</div>';
-                echo '</li>';
-                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';
-            }
-
-          ?>
-
-        </ul>
-      </div>
-    </nav> <!-- end nav bar -->
+    <!-- Navbar -->
+    <?php include("navbar.php"); ?>
 
     <!-- Cart -->
     <a href="cart.php">

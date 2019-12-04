@@ -1,4 +1,4 @@
-<!DOCTYPE HTML?>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -37,67 +37,8 @@
 
         ?>
 
-    <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index.php">Music Store</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="catalog.php">Catalog<span class="sr-only">(current)</span></a>
-          </li>
-
-          <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
-
-          <?php
-            if (isset($_SESSION['employeeID'])) {
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<p class="loggedinName">'.$_SESSION['employeeName'].'</p>';
-                        echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
-                    echo '</div>';
-                echo '</li>';
-                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';
-
-            } elseif (isset($_SESSION['customerID'])) {
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#">My Account</a>';
-                    echo '</div>';
-                echo '</li>';
-                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';
-            } else { // Not logged in, show login dropdown
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'Log in';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#customerLogin">Customer</a>';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin">Employee</a>';
-                    echo '</div>';
-                echo '</li>';
-
-            }
-
-          ?>       
-        </ul>
-      </div>
-    </nav> <!-- End Nav -->
+    <!-- Navbar -->
+    <?php include("navbar.php"); ?>
 
     <!-- Cart -->
     <a href="cart.php">
@@ -162,6 +103,10 @@
                 </div>
 		</table>
 	</div>
+
+      <!-- Both login modals -->
+      <?php include('login_modals.php'); ?>
+
 	</div>
 
 </body>

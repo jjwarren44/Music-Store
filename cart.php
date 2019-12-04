@@ -1,7 +1,7 @@
 <?php
 require_once('DBConn.php');
 ?>
-<!DOCTYPE HTML?>
+<!DOCTYPE HTML>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -38,69 +38,8 @@ require_once('DBConn.php');
 
         ?>
 
-    <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="index.php">Music Store</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="index.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="catalog.php">Catalog</a>
-          </li>
-
-          <!-- If logged in, show "My Account" instead of login. My account has dropdown to take them to either customer dashboard or employee dashboard -->
-
-          <?php
-            if (isset($_SESSION['employeeID'])) {
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<p class="loggedinName">'.$_SESSION['employeeName'].'</p>';
-                        echo '<a class="dropdown-item" href="employee_page.php">My Account</a>';
-                    echo '</div>';
-                echo '</li>';
-                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';
-
-            } elseif (isset($_SESSION['customerID'])) {
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'My Account';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#">My Account</a>';
-                        echo '<a class="dropdown-item" href="#">Logout</a>';
-                    echo '</div>';
-                echo '</li>';
-                echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
-                echo '</form>';
-            } else { // Not logged in, show login dropdown
-                echo '<li class="nav-item dropdown">';
-                    echo '<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">';
-                        echo 'Log in';
-                    echo '</a>';
-                    echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#customerLogin">Customer</a>';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin">Employee</a>';
-                    echo '</div>';
-                echo '</li>';
-
-            }
-
-          ?>
-
-        </ul>
-      </div>
-    </nav>
+    <!-- Navbar -->
+    <?php include("navbar.php"); ?>
 
     <!-- Cart -->
     <a href="cart.php">
@@ -126,7 +65,7 @@ require_once('DBConn.php');
                     echo '<div class=col-4>';
                     echo '</div>';
                     echo '<div class="col-4" align="center">';
-                        echo '<div class="form-group" align="center">';
+                        echo '<div class="form-group" align="center">'; // Search bar
                             echo '<input type="text" class="form-control" onkeyup="search()" placeholder="Search Album or Artist" id="searchBar" align="center">';
                         echo '</div>';
                         echo '<p>Click album to see songs in the album</p>';
@@ -139,12 +78,14 @@ require_once('DBConn.php');
                         echo '<table class="table table-borderless" id="albums" align="Center">';
                             echo "<div class = 'tableContent'>";
                                 echo '<thead>';
+                                    echo "<col width='30%'>"; // Column widths
                                     echo "<col width='30%'>";
-                                    echo "<col width='30%'>";
-                                    echo "<col width='12%'>";
-                                        echo "<tr class='table-active'>";
+                                    echo "<col width='20%'>";
+                                    echo "<col width-'12%'>";
+                                        echo "<tr class='table-active'>"; // Table headers
                                         echo "<th>Album</th>";
                                         echo "<th>Artist</th>";
+                                        echo "<th>Price</th>";
                                         echo "<th></th>";
                                     echo "</tr>";
                                     echo "</thead>";
@@ -153,12 +94,21 @@ require_once('DBConn.php');
             $sql_cartItems = implode(",", $_SESSION['itemsInCart']); // Create string of album IDs in cart -- example (56,42,10)
 
             mysqli_begin_transaction($conn); // Start mySQLi transaction
-            $result = mysqli_query($conn, "SELECT AlbumId, Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId AND Album.AlbumId IN (${sql_cartItems})");
+            $albumResult = mysqli_query($conn, "SELECT AlbumId, Name, Title FROM Artist, Album WHERE Artist.ArtistId = Album.ArtistId AND Album.AlbumId IN (${sql_cartItems})");
 
-            while ($row = $result->fetch_assoc()) {
+            while ($row = $albumResult->fetch_assoc()) {
                 echo "<tr class='table-active clickable-row' album-link='track_list.php?AlbumId=".$row['AlbumId']."&AlbumName=".$row['Title']."&Artist=".$row['Name']."'>";
                 echo "<td>".$row['Title']."</td>";
                 echo "<td>".$row['Name']."</td>";
+
+                // Find album price
+                $albumPrice = mysqli_query($conn, "SELECT SUM(UnitPrice) FROM Track WHERE AlbumId=".$row['AlbumId']);
+                $price = mysqli_fetch_row($albumPrice);
+                echo "<td>$".$price[0]."</td>";
+
+                mysqli_free_result($albumPrice); // free result
+
+                // Remove from cart button
                 echo "<td><form action='cart_handler.php' method='post' id='addToCart'>";
                     echo "<button type='submit' name='removeFromCart' value='".$row['AlbumId']."' class='btn btn-outline-danger'>Remove from cart</button>";
                 echo "</form></td>";
@@ -166,7 +116,7 @@ require_once('DBConn.php');
             }
 
             // Free result set
-            mysqli_free_result($result);
+            mysqli_free_result($albumResult);
 
             // Show cart total on screen
             $sql_cartItems = implode(",", $_SESSION['itemsInCart']); // Create string of album IDs in cart -- example (56,42,10)
@@ -178,76 +128,67 @@ require_once('DBConn.php');
 
             echo "<h3 align='center'>Total: $${cartTotal}</h3>";
 
+            echo "</tbody>";
+            echo "</div>";
+            echo "</table>"; // End table
+
             // Free result set
             mysqli_free_result($result);
 
             mysqli_close($conn); // close
+
+            // Check out button
+            // User must be logged in
+            if (isset($_SESSION['customerFirstName'])) {
+                echo "<button type='button' name='checkout' class='btn btn-success' data-toggle='modal' data-target='#checkoutForm'>Check out</button>";
+            } else {
+                echo "<h4>You must log in before you can checkout</h4>";
+            }
 
         } else { // else, there are no items in the cart
             echo "<h3 align='center'>There are no items in your cart</h3>";
         }
 
     ?>
-                            </tbody>
-                        </div>
-                </table>
+
             </div>
         </div>
 
-
-        <!-- Both login modals -->
-
-        <!-- Customer login -->
-        <div class="modal fade" id="customerLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <!-- Check out modal -->
+        <div class="modal fade" id="checkoutForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Customer Login</h5>
+                        <h5 class="modal-title" id="exampleModalLongTitle">Check out</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <form>
-                            <p>Username</p>
-                            <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
-                            <p>Password</p>
-                            <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
+                            <p>Street Address</p>
+                                <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
+                            <p>City</p>
+                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
+                            <p>Postal Code</p>
+                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
+                            <p>State</p>
+                                <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
+                            <p>Country</p>
+                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
+                            </form>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Log in</button>
+                        <button type="submit" class="btn btn-primary">Check out</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Employee login -->
-        <div class="modal fade" id="employeeLogin" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Employee Login</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action=" login_form_handler.php" method="post" id="employeeLogin">
-                            <p>Employee ID</p>
-                            <div class="form-group row"><input type="text" name="employeeID" id="employeeIDinput" class="form-control" placeholder="Enter Employee ID"></div>
-                            <p>Employee First Name</p>
-                            <div class="form-group row"><input type="text" name="employeeName" id="employeeNameInput" class="form-control" placeholder="Enter First Name"></div>
-
-
-                    </div>
-                    <div class="modal-footer">
-                        <button type="submit" name="employeeLoginSubmit" class="btn btn-primary">Log in</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- Both login modals -->
+        <?php include('login_modals.php'); ?>
+        
     </div>
 </body>
 
