@@ -1,7 +1,7 @@
 <?php
 	
 	// Find out what page we are on
-	if (basename($_SERVER['PHP_SELF']) == "index.php") {
+	if (basename($_SERVER['PHP_SELF']) == "index.php" || basename($_SERVER['PHP_SELF']) == "Register.php")  {
 		$currentPage = "index";
 	} elseif (basename($_SERVER['PHP_SELF']) == "catalog.php" || basename($_SERVER['PHP_SELF']) == "track_list.php") {
 		$currentPage = "catalog";
