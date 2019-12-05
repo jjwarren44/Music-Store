@@ -165,21 +165,16 @@ require_once('DBConn.php');
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form>
-                            <p>Street Address</p>
-                                <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
-                            <p>City</p>
-                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
-                            <p>Postal Code</p>
-                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
-                            <p>State</p>
-                                <div class="form-group row"><input type="Username" name="uname" class="form-control" placeholder="Enter Username"></div>
-                            <p>Country</p>
-                                <div class="form-group row"><input type="Password" name="pwrd" class="form-control" placeholder="Enter Password"></div>
-                            </form>
+                        <form action="checkout_handler.php" method="post" id="checkout">
+                            <p>Card Number</p>
+                                <div class="form-group row"><input type="text" name="cardNumber" class="form-control" placeholder="Enter Card Number"></div>
+                            <p>Expiration Date</p>
+                                <div class="form-group row"><input type="text" name="expDate" class="form-control" placeholder="Enter Expiration Date"></div>
+                            <p>CVV</p>
+                                <div class="form-group row"><input type="text" name="CVV" class="form-control" placeholder="Enter CVV"></div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-primary">Check out</button>
+                        <button type="submit" name="checkout" class="btn btn-primary">Check out</button>
                         </form>
                     </div>
                 </div>

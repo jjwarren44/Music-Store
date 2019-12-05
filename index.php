@@ -34,7 +34,18 @@
             echo '</div>';
             unset($_SESSION['failedLogin']);
         }
+    ?>
 
+    <!-- If user has successful order -->
+    <?php 
+        if(isset($_SESSION['successfulOrder'])) {
+            echo '<div class="container-fluid" id="successfulOrder" style="padding-top: 1vw">';
+            echo '<div class="alert alert-success">
+                    <strong>Order successfully placed</strong>';
+            echo' </div>';
+            echo '</div>';
+            unset($_SESSION['successfulOrder']);
+        }
     ?>
 
     <!-- Navbar -->

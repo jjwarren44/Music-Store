@@ -9,7 +9,7 @@
 			$rowcount = 0; // To determine if customer exists
 
 			mysqli_begin_transaction($conn); // Start mySQLi transaction
-			$sql = "SELECT Email, Password, FirstName FROM Customer WHERE Email='$email'";
+			$sql = "SELECT CustomerId, Email, Password, FirstName FROM Customer WHERE Email='$email'";
 
 			if ($result = mysqli_query($conn, $sql)) {
 				$rowcount = mysqli_num_rows($result);
@@ -20,6 +20,7 @@
 				$customerInfo = $result->fetch_assoc();
 
 				if ($password == $customerInfo['Password']) { // Correct password provided
+					$_SESSION['customerId'] = $customerInfo['CustomerId'];
 					$_SESSION['customerFirstName'] = $customerInfo['FirstName'];
 					$_SESSION['failedLogin'] = null; // successful login
 
@@ -30,6 +31,9 @@
 			} else { // Customer not found, failed login
 				$_SESSION['failedLogin'] = TRUE;
 			}
+
+			mysqli_commit($conn); // commit transaction
+			mysqli_close(); // close connection
 
 			header('Location: ' . $_SERVER['HTTP_REFERER']); // Go back to whereever we came from
 
@@ -66,6 +70,9 @@
 				$_SESSION['failedLogin'] = TRUE;
 			}
 
+			mysqli_commit($conn); // commit transaction
+			mysqli_close(); // close connection
+			
 			header('Location: ' . $_SERVER['HTTP_REFERER']); // Go back to whereever we came from
 
 		} elseif(isset($_POST['logout'])) { // User attempting to logout
