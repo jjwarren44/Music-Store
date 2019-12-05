@@ -54,15 +54,40 @@
     </a>
     
 	<div class="cotainer-fluid">
-		<br>
-		<div class="row text-center">
-			<div class="col-md-12">
-				<h1 class="display-4 text-secondary">Search for the music you want</h1>
-                <h5>A catalog full of music. Find information about music! Just a few clicks away</h5>
-                <a href="catalog.php"><button type="button" class="btn btn-secondary">Find Music</button></a>
-			</div>
+		<!--Change into PHP-->
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <h1>User Information</h1>
+            </div>
         </div>
-
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-1">
+                <br>
+                <h4>First Name:</h4>
+                <h4>Last Name:</h4>
+                <h4>Email:</h4>
+                <h4>Address:</h4>
+                <h4>Phone:</h4>
+            </div>
+             <div class="col-md-5">
+                <!--Put PHP here-->
+                <br>
+                <h4>Helena</h4>
+                <h4>Holy</h4>
+                <h4>HHoly@gmail.com</h4>
+                <h4> 121 Fake St. Schoolcraft mi, 49087, USA</h4>
+                <h4>111-111-1111</h4>
+             </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-3">
+                <h1>Invoices</h1>
+            </div>
+        </div>
         <!-- Both login modals -->
         <?php include('login_modals.php'); ?>
 
