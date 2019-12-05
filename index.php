@@ -78,27 +78,31 @@
                     </p>
                 </div>
                 <div class="row">
-                <div class="col-sm" align="center">
-                    <div class="card border-info mb-3" style="max-width: 750px;">
-                        <div class="card-header">Customer Log in</div>
-                        <div class="card-body">
-                            <h4 class="card-title">Log into your customer account now</h4>
-                            <p class="card-text">Customers can log in here to gain access to their account</p>
-                            <a class="btn btn-info btn-lg" href="#customerLogin" role="button" data-toggle="modal">Log In</a>
+                    <div class="col-md-6" align="center">
+                        <div class="col-md">
+                            <div class="card border-info mb-3" style="max-width: 750px;">
+                                <div class="card-header">Customer Log in</div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Log into your customer account now</h4>
+                                    <p class="card-text">Customers can log in here to gain access to their account</p>
+                                    <a class="btn btn-info btn-lg" href="#customerLogin" role="button" data-toggle="modal">Log In</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-sm">
-                    <div class="card border-info mb-3" style="max-width: 750px;">
-                        <div class="card-header">Employee Log in</div>
-                        <div class="card-body">
-                            <h4 class="card-title">Log into your employee account now</h4>
-                            <p class="card-text">Employees can log in here to gain access to their account.</p>
-                            <a class="btn btn-info btn-lg" href="#employeeLogin" role="button" data-toggle="modal">Log In</a>
-                        </div>
-                    </div>
-                </div>  
-            </div>
+                    <div class="col-md-6" align="center">
+                        <div class="col-md">
+                            <div class="card border-info mb-3" style="max-width: 750px;">
+                                <div class="card-header">Employee Log in</div>
+                                <div class="card-body">
+                                    <h4 class="card-title">Log into your employee account now</h4>
+                                    <p class="card-text">Employees can log in here to gain access to their account.</p>
+                                    <a class="btn btn-info btn-lg" href="#employeeLogin" role="button" data-toggle="modal">Log In</a>
+                                </div>
+                            </div>
+                        </div> 
+                    </div> 
+                <
             </div>
         </div>
         <!-- Both login modals -->
