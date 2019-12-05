@@ -11,8 +11,8 @@
 		$currentPage = "my_account";
 	} 
 
-    echo '<nav class="navbar navbar-expand-lg navbar-light bg-light">';
-      echo '<a class="navbar-brand" href="index.php">Music Store</a>';
+    echo '<nav class="navbar navbar-expand-lg navbar-info bg-info">';
+      echo '<a class="navbar-brand" href="index.php">DBM Music</a>';
       echo '<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">';
         echo '<span class="navbar-toggler-icon"></span>';
       echo '</button>';
