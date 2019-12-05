@@ -27,10 +27,6 @@
 	right: 0.5%;
 }
 
-#login-register_buttons {
-	margin: 20px;
-}
-
 #failedLogin {
 	z-index: 2;
 	position: absolute;
@@ -51,4 +47,8 @@
 	0% {opacity: 1;}
 	50% {opacity: 1;}
 	100% {opacity: 0;}
+}
+
+#registerButton {
+	margin-bottom: 30px;
 }

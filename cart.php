@@ -142,7 +142,7 @@ require_once('DBConn.php');
             if (isset($_SESSION['customerFirstName'])) {
                 echo "<button type='button' name='checkout' class='btn btn-success' data-toggle='modal' data-target='#checkoutForm'>Check out</button>";
             } else {
-                echo "<h4>You must log in before you can checkout</h4>";
+                echo "<h4>You must log in as a customer before you can checkout</h4>";
             }
 
         } else { // else, there are no items in the cart

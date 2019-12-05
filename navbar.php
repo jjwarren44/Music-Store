@@ -7,7 +7,7 @@
 		$currentPage = "catalog";
 	} elseif (basename($_SERVER['PHP_SELF']) == "cart.php") {
 		$currentPage = "cart";
-	} elseif (basename($_SERVER['PHP_SELF']) == "employee_page.php" || basename($_SERVER['PHP_SELF']) == "customer_page.php") {
+	} elseif (basename($_SERVER['PHP_SELF']) == "employee_page.php" || basename($_SERVER['PHP_SELF']) == "customer_page.php" || basename($_SERVER['PHP_SELF']) == "register.php" || basename($_SERVER['PHP_SELF']) == "customer-invoices.php") {
 		$currentPage = "my_account";
 	} 
 
@@ -88,7 +88,8 @@
                     echo '</a>';
                     echo '<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">';
                         echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#customerLogin">Customer</a>';
-                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin">Employee</a>';
+                        echo '<a class="dropdown-item" href="#" data-toggle="modal" data-target="#employeeLogin" style="border-bottom: 1px solid white; padding-bottom: 10px;">Employee</a>';
+                        echo '<a class="dropdown-item" href="register.php"><strong>Register</strong></a>';
                     echo '</div>';
                 echo '</li>';
 

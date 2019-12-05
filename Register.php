@@ -7,7 +7,7 @@
 
     <title>Music Store</title>
     <link href="css/bootstrap.min.css" rel="stylesheet"> <!-- Bootstrap -->
-    <link rel="stylesheet" type="text/css" href="css/index.css"> <!-- Custom css file -->
+    <link rel="stylesheet" type="text/css" href="css/register.css"> <!-- Custom css file -->
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -75,88 +75,70 @@
         </div>
         <div class="row">
             <div class="col-md-1"></div>
-            <!--Look at the project I showed you, it has a signup php-->
             <div class="col-md-4">
-                <form>
-                <br>
-                <h4>First Name:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter First Name" name="Fname">
+                <form action="login_form_handler.php" method="post" id="register"> <!-- Begin registeration form -->
+                    <br>
+                    <h4>First Name:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter First Name" name="Fname">
+                        </div>
                     </div>
-                </div>
-                <h4>Last Name:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Last Name" name="Lname">
+                    <h4>Last Name:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter Last Name" name="Lname">
+                        </div>
                     </div>
-                </div>
-                <h4>Email:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="Email" class="form-control" placeholder="Enter Email" name="Email">
+                    <h4>Email:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="Email" class="form-control" placeholder="Enter Email" name="email">
+                        </div>
                     </div>
-                </div>
-                <h4>Address:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="Address" class="form-control" placeholder="Enter Address" name="address">
+                    <h4>Address:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="Address" class="form-control" placeholder="Enter Address" name="address">
+                        </div>
                     </div>
-                </div>
-                <h4>City:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter City" name="city">
+                    <h4>City:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter City" name="city">
+                        </div>
                     </div>
-                </div>
-                <h4>State:</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter State" name="state">
+                    <h4>State*:</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter State" name="state">
+                        </div>
                     </div>
-                </div>
-                <h4>Country:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Country" name="cntry">
+                    <h4>Country:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter Country" name="country">
+                        </div>
                     </div>
-                </div>
-                <h4>Postal Code:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Postal Code" name="postalcode">
+                    <h4>Postal Code:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter Postal Code" name="postalcode">
+                        </div>
                     </div>
-                </div>
-                <h4>Phone:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Phone" name="phonenmber">
+                    <h4>Phone:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="text" class="form-control" placeholder="Enter Phone" name="phone">
+                        </div>
                     </div>
-                </div>
-                <h4>Fax:</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Fax" name="fax">
+                    <h4>Password:*</h4>
+                    <div class="form-group">
+                         <div class="input-group input-group-lg">
+                                <input type="password" class="form-control" placeholder="Enter Password" name="password">
+                        </div>
                     </div>
-                </div>
-                <h4>Company:</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="text" class="form-control" placeholder="Enter Company" name="cmpny">
-                    </div>
-                </div>
-                <h4>Password:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="password" class="form-control" placeholder="Enter Password" name="pwd">
-                    </div>
-                </div>
-                <h4>Confirm Password:*</h4>
-                <div class="form-group">
-                     <div class="input-group input-group-lg">
-                            <input type="password" class="form-control" placeholder="Confirm Password" name="pwd">
-                    </div>
-                </div>
+                    <button type="submit" name="register" class="btn btn-info" id="registerButton">Register</button>
                 </form>
             </div>
         </div>

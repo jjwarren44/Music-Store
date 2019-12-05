@@ -63,7 +63,7 @@
       $customerName = mysqli_query($conn, "SELECT FirstName, LastName FROM Customer WHERE CustomerId=".$_GET['CustomerId']);
       $result = $customerName->fetch_assoc();
 
-      echo '<h3>'.$result['FirstName'].' '.$result['LastName']."'s orders";
+      echo '<h3>'.$result['FirstName'].' '.$result['LastName']."'s orders</h3>";
       echo '</br>';
       echo '</br>';
 

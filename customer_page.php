@@ -81,54 +81,67 @@
         <br><br>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <h1>Purchases</h1>
+            <div class="col-md-10" align="center">
 
-                <!-- Table of invoices for this customer with tracks for each invoice -->
-                <table class="table table-borderless" id="invoices" align="Center">
-                    <div class = 'tableContent'>
-                        <thead>
-                            <tr class="table-active">
-                                <th>Invoice ID</th>
-                                <th>Invoice Date</th>
-                                <th>Songs</th>
-                                <th>Total</th>
-                            </tr>
-                        </thead>
-                        <tbody> 
-
+                <!-- If user has no purchases, display "no purchases" and catalog button. If they do, display all purchases -->
                 <?php
 
                     mysqli_begin_transaction($conn); // Start mySQLi transaction
+
                     $invoices = mysqli_query($conn, "SELECT InvoiceId, InvoiceDate, Total FROM Invoice WHERE CustomerId=".$_SESSION['customerId']);
+                    $numRows = mysqli_num_rows($invoices);
 
-                    while ($invoiceRow = $invoices->fetch_assoc()) {
-                        echo "<tr class='table-active clickable-row'>";
-                        echo "<td>".$invoiceRow['InvoiceId']."</td>";
-                        echo "<td>".$invoiceRow['InvoiceDate']."</td>";
+                    if ($numRows > 0) {
 
-                        // Find all tracks associated with invoice
-                        $tracks = mysqli_query($conn, "SELECT TrackId, UnitPrice, Quantity FROM InvoiceLine WHERE InvoiceId=".$invoiceRow['InvoiceId']);
-                        echo '<td>';
-                        echo '<ul>';
-                        while ($tracksInInvoice = $tracks->fetch_assoc()) {
-                          // list within cell to show all tracks
-                          $trackNamesQuery = mysqli_query($conn, "SELECT Name, Composer FROM Track WHERE TrackId=".$tracksInInvoice['TrackId']);
-                          $trackNames = $trackNamesQuery->fetch_assoc();
-                          echo '<li>'.$trackNames['Name'].' by '.$trackNames['Composer'].' - $'.$tracksInInvoice['UnitPrice'].'</li>';
+                        echo '<h1>Purchases</h1>';
+
+                        // Table of invoices for this customer with tracks for each invoice
+                        echo '<table class="table table-borderless" id="invoices" align="Center">';
+                            echo '<div class = "tableContent">';
+                                echo '<thead>';
+                                    echo '<tr class="table-active">';
+                                        echo '<th>Invoice ID</th>';
+                                        echo '<th>Invoice Date</th>';
+                                        echo '<th>Songs</th>';
+                                        echo '<th>Total</th>';
+                                    echo '</tr>';
+                                echo '</thead>';
+                                echo '<tbody> ';
+
+                        while ($invoiceRow = $invoices->fetch_assoc()) {
+                            echo "<tr class='table-active clickable-row'>";
+                            echo "<td>".$invoiceRow['InvoiceId']."</td>";
+                            echo "<td>".$invoiceRow['InvoiceDate']."</td>";
+
+                            // Find all tracks associated with invoice
+                            $tracks = mysqli_query($conn, "SELECT TrackId, UnitPrice, Quantity FROM InvoiceLine WHERE InvoiceId=".$invoiceRow['InvoiceId']);
+                            echo '<td>';
+                            echo '<ul>';
+                            while ($tracksInInvoice = $tracks->fetch_assoc()) {
+                              // list within cell to show all tracks
+                              $trackNamesQuery = mysqli_query($conn, "SELECT Name, Composer FROM Track WHERE TrackId=".$tracksInInvoice['TrackId']);
+                              $trackNames = $trackNamesQuery->fetch_assoc();
+                              echo '<li>'.$trackNames['Name'].' by '.$trackNames['Composer'].' - $'.$tracksInInvoice['UnitPrice'].'</li>';
+                            }
+
+                            mysqli_free_result($tracks); // free results
+
+                            echo '</ul>';
+                            echo '</td>';
+                            echo "<td>$".$invoiceRow['Total']."</td>";
+                            echo "</tr>";
                         }
 
-                        mysqli_free_result($tracks); // free results
+                        mysqli_free_result($invoices); // free results
+                        mysqli_commit($conn); // commit
+                        mysqli_close($conn); // close
 
-                        echo '</ul>';
-                        echo '</td>';
-                        echo "<td>$".$invoiceRow['Total']."</td>";
-                        echo "</tr>";
+                    } else { // no purchases yet
+                        echo '<h2>No purchases yet :(</h2>';
+                        echo '<h4>Go check out our catalog to browse our selection</h4>';
+                        echo '<br/>';
+                        echo '<a class="btn btn-info btn-lg" href="catalog.php" role="button">Catalog</a>';
                     }
-
-                    mysqli_free_result($invoices); // free results
-                    mysqli_commit($conn); // commit
-                    mysqli_close($conn); // close
 
                 ?>
                     </tbody>

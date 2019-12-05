@@ -63,7 +63,7 @@
             ?></span>
         </button>
     </a>
-    
+
     <div class="cotainer-fluid">
         <br>
         <div class="row text-center">
@@ -77,7 +77,7 @@
                     <a class="btn btn-info btn-lg" href="catalog.php" role="button">Catalog</a>
                     </p>
                 </div>
-                <div class="row">
+                <div class="row" id="login-register_buttons">
                     <div class="col-md-4" align="center">
                         <div class="card border-info mb-3" style="max-width: 750px;">
                             <div class="card-header">Customer Log in</div>
@@ -111,6 +111,7 @@
                 </div>
             </div>
         </div>
+
         <!-- Both login modals -->
         <?php include('login_modals.php'); ?>
     </div>
