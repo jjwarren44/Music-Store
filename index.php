@@ -63,7 +63,7 @@
                     <hr class="my-4">
                     <p>Browse the catalog to find your future music!</p>
                     <p class="lead">
-                    <a class="btn btn-info btn-lg" href="#" role="button">Catalog</a>
+                    <a class="btn btn-info btn-lg" href="catalog.php" role="button">Catalog</a>
                     </p>
                 </div>
                 <div class="row">
