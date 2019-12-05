@@ -27,7 +27,7 @@
     <!-- If user has unsuccessful login -->
     <?php 
         if(isset($_SESSION['failedLogin'])) {
-            echo '<div class="container-fluid failedlogin" style="padding-top: 1vw">';
+            echo '<div class="container-fluid" id="failedLogin" style="padding-top: 1vw">';
             echo '<div class="alert alert-danger">
                     <strong>Login failed!</strong> User not found or incorrect password.
                 </div>';

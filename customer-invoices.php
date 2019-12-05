@@ -82,7 +82,7 @@
             </thead>
                     <tbody> 
 
-                    <!-- Begin looping through all records in database to display all customers with SupportRepID == to employee ID -->
+                    <!-- Begin looping through all invoices from this customer -->
                     <?php
 
                         mysqli_begin_transaction($conn); // Start mySQLi transaction

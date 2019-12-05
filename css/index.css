@@ -26,3 +26,25 @@
 	top: 0.5%;
 	right: 0.5%;
 }
+
+#failedLogin {
+	z-index: 2;
+	position: absolute;
+	left: 10px;
+	top: 50px;
+	animation: fadeout ease 3s forwards;
+}
+
+#successfulOrder {
+	z-index: 2;
+	position: absolute;
+	left: 10px;
+	top: 50px;
+	animation: fadeout ease 3s forwards;
+}
+
+@keyframes fadeout {
+	0% {opacity: 1;}
+	50% {opacity: 1;}
+	100% {opacity: 0;}
+}

@@ -72,7 +72,7 @@
 	<div class="col-1">
     </div>
 	<div class="col-10">
-        <!--Will get switched to php code//placeholder -->
+        
 		<table class="table table-borderless" id="customers" align="Center">
             <div class = 'tableContent'>
 				<thead>

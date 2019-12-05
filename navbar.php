@@ -57,7 +57,7 @@
                     echo '</div>';
                 echo '</li>';
                 echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
+                    echo '<button type="submit" name="logout" class="btn btn-dark" id="logout">Logout</button>';
                 echo '</form>';
 
             } elseif (isset($_SESSION['customerFirstName'])) {
@@ -78,7 +78,7 @@
                     echo '</div>';
                 echo '</li>';
                 echo '<form action=" login_form_handler.php" method="post" id="profileLogout">';
-                    echo '<button type="submit" name="logout" class="btn btn-outline-danger" id="logout">Logout</button>';
+                    echo '<button type="submit" name="logout" class="btn btn-dark" id="logout">Logout</button>';
                 echo '</form>';
 
             } else { // Not logged in, show login dropdown

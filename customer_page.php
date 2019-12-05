@@ -24,19 +24,6 @@
     session_start();
 ?>
 
-    <!-- If user has unsuccessful login -->
-    <?php 
-        if(isset($_SESSION['failedLogin'])) {
-            echo '<div class="container-fluid failedlogin" style="padding-top: 1vw">';
-            echo '<div class="alert alert-danger">
-                    <strong>Login failed!</strong> User not found or incorrect password.
-                </div>';
-            echo '</div>';
-            unset($_SESSION['failedLogin']);
-        }
-
-    ?>
-
     <!-- Navbar -->
     <?php include("navbar.php"); ?>
 
@@ -72,24 +59,83 @@
                 <h4>Phone:</h4>
             </div>
              <div class="col-md-5">
-                <!--Put PHP here-->
                 <br>
-                <h4>Helena</h4>
-                <h4>Holy</h4>
-                <h4>HHoly@gmail.com</h4>
-                <h4> 121 Fake St. Schoolcraft mi, 49087, USA</h4>
-                <h4>111-111-1111</h4>
+
+                <?php
+                    mysqli_begin_transaction($conn);
+
+                    // Get user information to be displayed
+                    $user_info_query = mysqli_query($conn, "SELECT FirstName, LastName, Email, Address, City, State, PostalCode, Country, Phone FROM Customer WHERE CustomerId=".$_SESSION['customerId']);
+                    $info = mysqli_fetch_assoc($user_info_query);
+
+                    // Display user info
+                    echo '<h4>'.$info['FirstName'].'</h4>';
+                    echo '<h4>'.$info['LastName'].'</h4>';
+                    echo '<h4>'.$info['Email'].'</h4>';
+                    echo '<h4>'.$info['Address'].', '.$info['City'].', '.$info['State'].', '.$info['PostalCode'].', '.$info['Country'].'</h4>';
+                    echo '<h4>'.$info['Phone'].'</h4>';
+                ?>
+
              </div>
         </div>
         <br><br>
         <div class="row">
             <div class="col-md-1"></div>
-            <div class="col-md-3">
-                <h1>Invoices</h1>
-            </div>
+            <div class="col-md-10">
+                <h1>Purchases</h1>
+
+                <!-- Table of invoices for this customer with tracks for each invoice -->
+                <table class="table table-borderless" id="invoices" align="Center">
+                    <div class = 'tableContent'>
+                        <thead>
+                            <tr class="table-active">
+                                <th>Invoice ID</th>
+                                <th>Invoice Date</th>
+                                <th>Songs</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody> 
+
+                <?php
+
+                    mysqli_begin_transaction($conn); // Start mySQLi transaction
+                    $invoices = mysqli_query($conn, "SELECT InvoiceId, InvoiceDate, Total FROM Invoice WHERE CustomerId=".$_SESSION['customerId']);
+
+                    while ($invoiceRow = $invoices->fetch_assoc()) {
+                        echo "<tr class='table-active clickable-row'>";
+                        echo "<td>".$invoiceRow['InvoiceId']."</td>";
+                        echo "<td>".$invoiceRow['InvoiceDate']."</td>";
+
+                        // Find all tracks associated with invoice
+                        $tracks = mysqli_query($conn, "SELECT TrackId, UnitPrice, Quantity FROM InvoiceLine WHERE InvoiceId=".$invoiceRow['InvoiceId']);
+                        echo '<td>';
+                        echo '<ul>';
+                        while ($tracksInInvoice = $tracks->fetch_assoc()) {
+                          // list within cell to show all tracks
+                          $trackNamesQuery = mysqli_query($conn, "SELECT Name, Composer FROM Track WHERE TrackId=".$tracksInInvoice['TrackId']);
+                          $trackNames = $trackNamesQuery->fetch_assoc();
+                          echo '<li>'.$trackNames['Name'].' by '.$trackNames['Composer'].' - $'.$tracksInInvoice['UnitPrice'].'</li>';
+                        }
+
+                        mysqli_free_result($tracks); // free results
+
+                        echo '</ul>';
+                        echo '</td>';
+                        echo "<td>$".$invoiceRow['Total']."</td>";
+                        echo "</tr>";
+                    }
+
+                    mysqli_free_result($invoices); // free results
+                    mysqli_commit($conn); // commit
+                    mysqli_close($conn); // close
+
+                ?>
+                    </tbody>
+                </div>
+            </table>
         </div>
-        <!-- Both login modals -->
-        <?php include('login_modals.php'); ?>
+    </div>
 
     </div>
 </body>

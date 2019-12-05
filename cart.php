@@ -81,7 +81,7 @@ require_once('DBConn.php');
                                     echo "<col width='30%'>"; // Column widths
                                     echo "<col width='30%'>";
                                     echo "<col width='20%'>";
-                                    echo "<col width-'12%'>";
+                                    echo "<col width-'10%'>";
                                         echo "<tr class='table-active'>"; // Table headers
                                         echo "<th>Album</th>";
                                         echo "<th>Artist</th>";
@@ -109,8 +109,8 @@ require_once('DBConn.php');
                 mysqli_free_result($albumPrice); // free result
 
                 // Remove from cart button
-                echo "<td><form action='cart_handler.php' method='post' id='addToCart'>";
-                    echo "<button type='submit' name='removeFromCart' value='".$row['AlbumId']."' class='btn btn-outline-danger'>Remove from cart</button>";
+                echo "<td align='right'><form action='cart_handler.php' method='post' id='addToCart'>";
+                    echo "<button type='submit' name='removeFromCart' value='".$row['AlbumId']."' class='btn btn-outline-info'>Remove from cart</button>";
                 echo "</form></td>";
                 echo "</tr>";
             }

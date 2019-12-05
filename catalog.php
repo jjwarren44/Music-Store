@@ -75,10 +75,12 @@ require_once('DBConn.php');
         				<thead>
                             <col width='30%'>
                             <col width='30%'>
+                            <col width='20%'>
                             <col width='10%'>
         						<tr class="table-active">
              					<th>Album</th>
               					<th>Artist</th>
+                                <th>Price</th>
                                 <th></th>
              				</tr>
              				</thead>
@@ -94,8 +96,13 @@ require_once('DBConn.php');
                                     echo "<tr class='table-active clickable-row' album-link='track_list.php?AlbumId=".$row['AlbumId']."&AlbumName=".$row['Title']."&Artist=".$row['Name']."'>";
                                     echo "<td>".$row['Title']."</td>";
                                     echo "<td>".$row['Name']."</td>";
-                                    echo "<td><form action='cart_handler.php' method='post' id='addToCart'>";
-                                        echo "<button type='submit' name='addToCart' value='".$row['AlbumId']."' class='btn btn-outline-success'>Add to cart</button>";
+
+                                    // Find price of album
+                                    $price_query = mysqli_query($conn, "SELECT SUM(UnitPrice) FROM Track WHERE AlbumId=".$row['AlbumId']);
+                                    echo "<td>$".mysqli_fetch_row($price_query)[0]."</td>";
+
+                                    echo "<td align='right'><form action='cart_handler.php' method='post' id='addToCart'>";
+                                        echo "<button type='submit' name='addToCart' value='".$row['AlbumId']."' class='btn btn-outline-info'>Add to cart</button>";
                                     echo "</form></td>";
                                     echo "</tr>";
                                 }
