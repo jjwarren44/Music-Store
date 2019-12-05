@@ -70,7 +70,7 @@
             <div class="col-md-12">
                 <div class="jumbotron">
                     <h1 class="display-3">DBM Music</h1>
-                    <p class="lead">Buy the music that you want quick and easy! No Hastle.</p>
+                    <p class="lead">Buy the music that you want quick and easy! No hassle.</p>
                     <hr class="my-4">
                     <p>Browse the catalog to find your future music!</p>
                     <p class="lead">
